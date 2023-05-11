@@ -3,9 +3,10 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "801125fca546f506babac9af4ec061ba",
+  "assets/AssetManifest.json": "6d2c3593e506859eac5ee30435990b0c",
 "assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
 "assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
+"assets/images/sungil-mark.jpg": "4d50460abfc346c4b086f80ccf9be77b",
 "assets/NOTICES": "07743f29373033fa80dc79834bda4c01",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "b00363533ebe0bfdb95f3694d7647f6d",
@@ -21,9 +22,9 @@ const RESOURCES = {
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "fa215e9f7351d1ffffa3f40e98e5d935",
-"/": "fa215e9f7351d1ffffa3f40e98e5d935",
-"main.dart.js": "3b6fcbe735ee2ef50fadd6d6f05cc9d9",
+"index.html": "e680f50f3e5a4fbbdb807665db60ed02",
+"/": "e680f50f3e5a4fbbdb807665db60ed02",
+"main.dart.js": "d1cc39251621c1ba1a0cb8b7e6f877be",
 "manifest.json": "88206ac7e335d3fd86478d78058e896c",
 "version.json": "984801ddfd1ecf132a2f19493b0332e0"
 };
