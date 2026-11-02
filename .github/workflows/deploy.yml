@@ -28,7 +28,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx quartz build
+      # Windows에서 커밋하면 bootstrap-cli.mjs 실행 권한이 빠져 npx quartz 가 Permission denied 로 실패하므로 node 로 직접 실행
+      - run: node quartz/bootstrap-cli.mjs build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public
