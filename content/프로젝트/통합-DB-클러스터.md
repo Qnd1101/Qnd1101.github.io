@@ -21,6 +21,32 @@ tags: [PostgreSQL, Patroni, etcd, HA]
 
 구성은 PostgreSQL 17 + Patroni 4.1 + etcd 3.7, 서버 3대입니다. 비동기 복제를 쓰고, 하드웨어 watchdog과 etcd 인증을 켰습니다.
 
+```mermaid
+flowchart TB
+  APP[서비스 앱들] --> L{{현재 주 DB}}
+  subgraph N1["노드 1"]
+    P1[Patroni] --- D1[(PostgreSQL 주)]
+    E1[etcd]
+  end
+  subgraph N2["노드 2"]
+    P2[Patroni] --- D2[(PostgreSQL 복제)]
+    E2[etcd]
+  end
+  subgraph N3["노드 3"]
+    P3[Patroni] --- D3[(PostgreSQL 복제)]
+    E3[etcd]
+  end
+  L --> D1
+  D1 == 비동기 복제 ==> D2
+  D1 == 비동기 복제 ==> D3
+  E1 <--> E2 <--> E3
+  P1 -. 주 잠금 갱신 .-> E1
+  P2 -. 상태 감시 .-> E2
+  P3 -. 상태 감시 .-> E3
+```
+
+주 노드의 Patroni가 etcd에 잠금을 갱신하지 못하면 스스로 내려오고(watchdog), 나머지 노드 중 하나가 과반 합의로 새 주가 됩니다.
+
 ## 결과
 
 0.5초마다 한 행씩 쓰는 부하를 걸어 놓고 장애를 만들었습니다.

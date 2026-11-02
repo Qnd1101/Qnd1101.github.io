@@ -51,4 +51,17 @@ Artifactory 7.98부터 내장 Derby DB를 거부해서 전 서비스가 연쇄�
 - 작성 세션과 분리된 AI 코드 리뷰를 절차에 포함
 - MR 본문의 `Closes #N`으로 이슈 자동 종료
 
+```mermaid
+flowchart LR
+  I[이슈] --> BR[작업 브랜치]
+  BR --> MR[MR<br/>Closes #N]
+  MR --> CI{빌드·단위 테스트}
+  CI -->|통과| RV[AI 리뷰<br/>별도 세션]
+  RV --> M[main 병합]
+  M --> T[/SemVer 태그<br/>사람 확인 1회/]
+  T --> J[Jenkins<br/>태그 버전 주입 빌드]
+  J --> A[(Artifactory<br/>버전/Job/파일)]
+  J --> N[사내 메신저 알림]
+```
+
 릴리스에서 사람이 할 일은 **태그 확인 한 번**입니다. 그 뒤로 Jenkins가 태그 버전을 주입해 빌드하고, 저장소 업로드와 메신저 알림이 자동으로 이어집니다. 이 흐름을 템플릿 저장소와 Claude Code 스킬로 만들어 다른 프로젝트에도 그대로 쓸 수 있게 했습니다.

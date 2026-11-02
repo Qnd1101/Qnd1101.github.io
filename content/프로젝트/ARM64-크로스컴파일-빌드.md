@@ -30,6 +30,22 @@ tags: [Python, ARM64, Cython, Nuitka, PyInstaller, Jenkins]
 
 처음 3종을 비교했을 때 권고안은 "ARM 빌드 서버를 들여서 ③을 쓰자"였습니다. 그런데 ARM 빌더, 에뮬레이터, 외부 CI가 모두 보안정책상 불가로 확정되면서 그 안을 쓸 수 없게 됐습니다. 그래서 ③을 버리지 않고 **크로스컴파일로 다시 설계**했습니다. 미리 빌드된 독립 실행형 Python 런타임(PBS)을 번들에 넣고, 소스는 Cython으로 x86에서 ARM64용 공유 라이브러리로 컴파일하는 방식입니다.
 
+```mermaid
+flowchart LR
+  SRC[Python 소스] --> CY[Cython<br/>x86에서 ARM64용 .so 컴파일]
+  PBS[(PBS ARM64 런타임<br/>stripped)] --> BUN
+  DEPS[의존 패키지 wheel] --> BUN
+  CY --> BUN[자체 완결 번들<br/>런처 + 런타임 + .so]
+  BUN --> ZIP[zip 산출물]
+  ZIP --> AR[(Artifactory)]
+  AR --> DEV[ARM64 게이트 장비<br/>라이선스 검증 후 기동]
+  subgraph JK["사내 x86 Jenkins (에뮬레이터·ARM 보드 없음)"]
+    CY
+    BUN
+    ZIP
+  end
+```
+
 ## 결과
 
 - 에뮬레이터·ARM 보드 없이 **x86 서버에서 ARM64 빌드 약 2.5분**
